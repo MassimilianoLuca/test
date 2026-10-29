@@ -19,13 +19,8 @@
   </header>
 
   <main>
-    <form id="claim-form" action="https://formsubmit.co/mluca@fbk.eu" method="POST" enctype="multipart/form-data" novalidate>
-      <!-- Impostazioni FormSubmit -->
-      <input type="hidden" name="_subject" value="Nuovo reclamo cliente">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="">
-      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off">
+    <form id="claim-form" novalidate>
+      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
 
       <section>
         <h2>Dati generali <span class="en">/ General data</span></h2>
@@ -147,7 +142,6 @@
         </fieldset>
 
         <div class="field">
-          <input type="hidden" id="replacement-value" name="Richiesta sostituzione" value="No">
           <label class="check"><input type="checkbox" id="replacement"> <span>Il cliente chiede la sostituzione del materiale <span class="en">/ Customer requests product replacement</span></span></label>
         </div>
       </section>
@@ -169,6 +163,7 @@
     </form>
   </main>
 
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

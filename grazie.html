@@ -16,6 +16,7 @@
   <main>
     <section>
       <h2>Reclamo inviato <span class="en">/ Claim sent</span></h2>
+      <p id="claim-id" hidden>Numero reclamo / Claim number: <strong></strong></p>
       <p>Grazie, abbiamo ricevuto il tuo reclamo. Ti contatteremo al più presto.</p>
       <p class="en">Thank you, we have received your claim. We will get back to you as soon as possible.</p>
       <div class="actions">
@@ -23,5 +24,12 @@
       </div>
     </section>
   </main>
+  <script>
+    const id = new URLSearchParams(location.search).get('id');
+    if (id) {
+      document.querySelector('#claim-id strong').textContent = id;
+      document.getElementById('claim-id').hidden = false;
+    }
+  </script>
 </body>
 </html>

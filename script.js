@@ -1,5 +1,5 @@
-// Il form viene inviato a FormSubmit (formsubmit.co), che inoltra il contenuto via email
-// all'indirizzo indicato nell'attributo action del form in index.html.
+// Il form viene inviato alla Web App di Google Apps Script (URL in config.js), che salva
+// il reclamo nel Google Sheet e manda l'email di notifica.
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 
 const form = document.getElementById('claim-form');
@@ -10,13 +10,6 @@ const preview = document.getElementById('photo-preview');
 const replacement = document.getElementById('replacement');
 
 document.getElementById('claimDate').valueAsDate = new Date();
-
-// Dopo l'invio FormSubmit rimanda a grazie.html (solo se la pagina è servita via http/https).
-if (location.protocol.startsWith('http')) {
-  form.elements._next.value = new URL('grazie.html', location.href).href;
-} else {
-  form.elements._next.remove();
-}
 
 form.addEventListener('change', (e) => {
   if (e.target.name === 'Foto') photoUpload.hidden = e.target.value !== 'Sì';
@@ -78,31 +71,54 @@ function validate() {
   return missing;
 }
 
-form.addEventListener('submit', (e) => {
+function readAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+function showErrors(messages) {
+  errorsBox.innerHTML = '<strong>Campi mancanti o non validi / Missing or invalid fields:</strong><ul></ul>';
+  const list = errorsBox.querySelector('ul');
+  for (const m of messages) list.appendChild(Object.assign(document.createElement('li'), { textContent: m }));
+  errorsBox.hidden = false;
+  errorsBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+const submitButton = form.querySelector('button[type=submit]');
+const submitLabel = submitButton.innerHTML;
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
   const missing = validate();
-  if (missing.length) {
-    e.preventDefault();
-    errorsBox.innerHTML = '<strong>Campi mancanti o non validi / Missing or invalid fields:</strong><ul>' +
-      missing.map((m) => `<li>${m}</li>`).join('') + '</ul>';
-    errorsBox.hidden = false;
-    errorsBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
+  if (missing.length) return showErrors(missing);
+  if (!window.CLAIMS_API_URL) return showErrors(['Invio non configurato: manca CLAIMS_API_URL in config.js']);
   errorsBox.hidden = true;
 
-  const data = new FormData(form);
-  form.elements._subject.value = `Reclamo ${data.get('Ragione sociale')} – ${data.get('Articolo')} – batch ${data.get('Batch nr')}`;
-  document.getElementById('replacement-value').value = replacement.checked ? 'Sì' : 'No';
-  if (data.get('Foto') !== 'Sì') photoInput.value = '';
+  const data = Object.fromEntries(new FormData(form));
+  delete data.attachment;
+  data['Richiesta sostituzione'] = replacement.checked ? 'Sì' : 'No';
 
-  const button = form.querySelector('button[type=submit]');
-  button.disabled = true;
-  button.textContent = 'Invio in corso… / Sending…';
-});
+  const file = data['Foto'] === 'Sì' ? photoInput.files[0] : null;
 
-// Se l'utente torna indietro dal browser, riattiva il pulsante.
-window.addEventListener('pageshow', () => {
-  const button = form.querySelector('button[type=submit]');
-  button.disabled = false;
-  button.innerHTML = 'Invia reclamo <span class="en">/ Send claim</span>';
+  submitButton.disabled = true;
+  submitButton.textContent = 'Invio in corso… / Sending…';
+  try {
+    const photo = file ? { name: file.name, type: file.type, data: await readAsBase64(file) } : null;
+    // Corpo text/plain: richiesta "semplice", niente preflight CORS verso Apps Script.
+    const res = await fetch(window.CLAIMS_API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'submit', data, photo }),
+    });
+    const result = await res.json();
+    if (!result.ok) throw new Error(result.error);
+    location.href = 'grazie.html?id=' + encodeURIComponent(result.id);
+  } catch (err) {
+    showErrors(['Invio non riuscito, riprova / Sending failed, please retry: ' + err.message]);
+    submitButton.disabled = false;
+    submitButton.innerHTML = submitLabel;
+  }
 });

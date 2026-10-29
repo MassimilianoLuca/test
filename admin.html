@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Dashboard reclami – Diatecx</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <header class="page-header">
+    <div class="brand">
+      <span class="brand-name">DIATECX</span>
+      <span class="brand-tag">THE COATING COMPANY</span>
+    </div>
+    <div class="header-right">
+      <h1>Dashboard reclami</h1>
+      <div id="session" hidden>
+        <span id="data-source" class="muted"></span>
+        <button type="button" id="refresh-btn">Aggiorna</button>
+        <button type="button" id="logout-btn">Esci</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="login" class="login">
+      <h2>Accesso amministratore</h2>
+      <form id="login-form">
+        <div class="field">
+          <label for="token">Token amministratore</label>
+          <input id="token" type="password" autocomplete="current-password" required>
+        </div>
+        <div id="login-error" class="errors" hidden></div>
+        <div class="actions">
+          <button type="submit" class="primary">Entra</button>
+          <button type="button" id="demo-btn">Vedi con dati di esempio</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="dashboard" hidden>
+      <div class="filters">
+        <label>Periodo
+          <select id="f-period">
+            <option value="30">Ultimi 30 giorni</option>
+            <option value="90">Ultimi 90 giorni</option>
+            <option value="365" selected>Ultimi 12 mesi</option>
+            <option value="ytd">Anno in corso</option>
+            <option value="all">Tutto</option>
+          </select>
+        </label>
+        <label>Divisione <select id="f-division"><option value="">Tutte</option></select></label>
+        <label>Stabilimento <select id="f-plant"><option value="">Tutti</option></select></label>
+        <label>Stato <select id="f-status"><option value="">Tutti</option></select></label>
+        <label class="grow">Cerca <input id="f-search" type="search" placeholder="Cliente, articolo, batch, ID…"></label>
+      </div>
+
+      <div class="kpis" id="kpis"></div>
+
+      <div class="charts">
+        <section class="chart wide">
+          <h2>Reclami per mese</h2>
+          <div id="chart-month" class="vbars"></div>
+        </section>
+        <section class="chart">
+          <h2>Per divisione</h2>
+          <div id="chart-division" class="hbars"></div>
+        </section>
+        <section class="chart">
+          <h2>Per stabilimento</h2>
+          <div id="chart-plant" class="hbars"></div>
+        </section>
+        <section class="chart">
+          <h2>Per stato</h2>
+          <div id="chart-status" class="hbars"></div>
+        </section>
+        <section class="chart">
+          <h2>Clienti con più reclami</h2>
+          <div id="chart-client" class="hbars"></div>
+        </section>
+        <section class="chart">
+          <h2>Articoli con più reclami</h2>
+          <div id="chart-product" class="hbars"></div>
+        </section>
+      </div>
+
+      <section class="list">
+        <div class="list-head">
+          <h2>Reclami <span id="count" class="muted"></span></h2>
+          <button type="button" id="export-btn">Esporta CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table id="claims-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Data</th><th>Cliente</th><th>Articolo</th><th>Batch</th>
+                <th>Divisione</th><th>Stabilimento</th><th>Stato</th><th>Giorni</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="actions"><button type="button" id="more-btn" hidden></button></div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="detail">
+    <form method="dialog" class="detail-head">
+      <h2 id="detail-title"></h2>
+      <button aria-label="Chiudi">✕</button>
+    </form>
+    <dl id="detail-fields"></dl>
+    <div class="detail-edit">
+      <div class="field">
+        <label for="detail-status">Stato</label>
+        <select id="detail-status"></select>
+      </div>
+      <div class="field">
+        <label for="detail-notes">Note interne</label>
+        <textarea id="detail-notes" rows="3"></textarea>
+      </div>
+      <div id="detail-error" class="errors" hidden></div>
+      <div class="actions">
+        <button type="button" id="detail-save" class="primary">Salva</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
