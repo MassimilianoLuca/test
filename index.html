@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modulo Reclamo Cliente – Diatecx</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="page-header">
+    <div class="brand">
+      <span class="brand-name">DIATECX</span>
+      <span class="brand-tag">THE COATING COMPANY</span>
+    </div>
+    <h1>
+      Modulo reclamo cliente
+      <span class="en">Customer complaint form</span>
+    </h1>
+  </header>
+
+  <main>
+    <form id="claim-form" novalidate>
+      <section>
+        <h2>Dati generali <span class="en">/ General data</span></h2>
+
+        <div class="field">
+          <label for="company">Ragione sociale cliente <span class="en">/ Client company name</span> *</label>
+          <input id="company" name="company" type="text" required autocomplete="organization">
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="claimDate">Data reclamo <span class="en">/ Claim date</span> *</label>
+            <input id="claimDate" name="claimDate" type="date" required>
+          </div>
+          <div class="field">
+            <label for="contact">Referente invio reclamo <span class="en">/ Claim ref. person</span> *</label>
+            <input id="contact" name="contact" type="text" required autocomplete="name">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="email">Email referente <span class="en">/ Contact email</span> *</label>
+            <input id="email" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="phone">Telefono <span class="en">/ Phone</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>Divisione <span class="en">/ Division</span> *</legend>
+          <div class="choices">
+            <label><input type="radio" name="division" value="Textile" required> Textile</label>
+            <label><input type="radio" name="division" value="Graphic Arts"> Graphic Arts</label>
+            <label><input type="radio" name="division" value="Industrial Adhesives"> Industrial Adhesives</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend>Rif. stabilimento <span class="en">/ Plant ref.</span> *</legend>
+          <div class="choices">
+            <label><input type="radio" name="plant" value="Diatecx (sede / headquarter)" required> Diatecx <small>(sede / headquarter)</small></label>
+            <label><input type="radio" name="plant" value="GAM"> GAM</label>
+            <label><input type="radio" name="plant" value="Carpi"> Carpi</label>
+            <label><input type="radio" name="plant" value="Empoli"> Empoli</label>
+          </div>
+        </fieldset>
+      </section>
+
+      <section>
+        <h2>Dati prodotto <span class="en">/ Product data</span></h2>
+
+        <div class="row">
+          <div class="field grow">
+            <label for="product">Articolo <span class="en">/ Product</span> *</label>
+            <input id="product" name="product" type="text" required>
+          </div>
+          <div class="field">
+            <label for="quantity">Quantità <span class="en">/ Quantity</span> *</label>
+            <input id="quantity" name="quantity" type="text" inputmode="decimal" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="batch">Batch nr. *</label>
+          <input id="batch" name="batch" type="text" required>
+        </div>
+
+        <div class="row">
+          <div class="field grow">
+            <label for="ddt">DDT nr. <span class="en">/ Packing list nr.</span> *</label>
+            <input id="ddt" name="ddt" type="text" required>
+          </div>
+          <div class="field">
+            <label for="ddtDate">Data DDT <span class="en">/ Date</span></label>
+            <input id="ddtDate" name="ddtDate" type="date">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field grow">
+            <label for="invoice">Rif. fattura <span class="en">/ Invoice ref.</span></label>
+            <input id="invoice" name="invoice" type="text">
+          </div>
+          <div class="field">
+            <label for="invoiceDate">Data fattura <span class="en">/ Date</span></label>
+            <input id="invoiceDate" name="invoiceDate" type="date">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="description">Descrizione problematica <span class="en">/ Problem description</span> *</label>
+          <textarea id="description" name="description" rows="6" required></textarea>
+        </div>
+
+        <fieldset class="field">
+          <legend>Foto <span class="en">/ Photo</span> *</legend>
+          <div class="choices">
+            <label><input type="radio" name="photo" value="Sì" required> Sì / Yes</label>
+            <label><input type="radio" name="photo" value="No"> No</label>
+          </div>
+          <div id="photo-upload" class="upload" hidden>
+            <label for="photos">Seleziona le foto <span class="en">/ Select photos</span></label>
+            <input id="photos" name="photos" type="file" accept="image/*" multiple>
+            <div id="photo-preview" class="preview"></div>
+            <p class="hint">Le foto vanno allegate manualmente all'email che si aprirà dopo l'invio.
+              <span class="en">Photos must be attached manually to the email that opens after submitting.</span></p>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend>Campioni <span class="en">/ Samples</span> (**) *</legend>
+          <div class="choices">
+            <label><input type="radio" name="samples" value="Sì" required> Sì / Yes</label>
+            <label><input type="radio" name="samples" value="No"> No</label>
+          </div>
+          <p class="hint">(**) Obbligatorio per sostituzione materiale.
+            <span class="en">Mandatory for product replacement.</span></p>
+        </fieldset>
+
+        <div class="field">
+          <label class="check"><input type="checkbox" name="replacement" id="replacement"> <span>Il cliente chiede la sostituzione del materiale <span class="en">/ Customer requests product replacement</span></span></label>
+        </div>
+      </section>
+
+      <p class="note">
+        * Per una corretta analisi della problematica è richiesta documentazione fotografica e/o campionatura
+        del prodotto difettoso per procedere con la valutazione del reclamo.<br>
+        <span class="en">For a correct analysis of the problem, photographic documentation and/or sampling of
+        the defective product is required to proceed with the evaluation of the claim.</span>
+      </p>
+
+      <div id="errors" class="errors" role="alert" hidden></div>
+
+      <div class="actions">
+        <button type="submit" class="primary">Invia reclamo <span class="en">/ Send claim</span></button>
+        <button type="button" id="print-btn">Stampa / PDF</button>
+        <button type="reset">Svuota <span class="en">/ Clear</span></button>
+      </div>
+    </form>
+
+    <div id="done" class="done" hidden>
+      <h2>Grazie <span class="en">/ Thank you</span></h2>
+      <p>Si è aperto il tuo programma di posta con il reclamo già compilato: controlla, allega le foto se previste e premi <strong>Invia</strong>.</p>
+      <p class="en">Your email client opened with the claim pre-filled: review it, attach the photos if any, and press <strong>Send</strong>.</p>
+      <p>Se l'email non si è aperta, <a id="mail-link" href="#">clicca qui</a> oppure copia il testo qui sotto.</p>
+      <pre id="summary"></pre>
+      <div class="actions">
+        <button type="button" id="copy-btn">Copia testo <span class="en">/ Copy text</span></button>
+        <button type="button" id="back-btn">Torna al modulo <span class="en">/ Back to form</span></button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
