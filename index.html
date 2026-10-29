@@ -19,23 +19,30 @@
   </header>
 
   <main>
-    <form id="claim-form" novalidate>
+    <form id="claim-form" action="https://formsubmit.co/mluca@fbk.eu" method="POST" enctype="multipart/form-data" novalidate>
+      <!-- Impostazioni FormSubmit -->
+      <input type="hidden" name="_subject" value="Nuovo reclamo cliente">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="">
+      <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off">
+
       <section>
         <h2>Dati generali <span class="en">/ General data</span></h2>
 
         <div class="field">
           <label for="company">Ragione sociale cliente <span class="en">/ Client company name</span> *</label>
-          <input id="company" name="company" type="text" required autocomplete="organization">
+          <input id="company" name="Ragione sociale" type="text" required autocomplete="organization">
         </div>
 
         <div class="row">
           <div class="field">
             <label for="claimDate">Data reclamo <span class="en">/ Claim date</span> *</label>
-            <input id="claimDate" name="claimDate" type="date" required>
+            <input id="claimDate" name="Data reclamo" type="date" required>
           </div>
           <div class="field">
             <label for="contact">Referente invio reclamo <span class="en">/ Claim ref. person</span> *</label>
-            <input id="contact" name="contact" type="text" required autocomplete="name">
+            <input id="contact" name="Referente" type="text" required autocomplete="name">
           </div>
         </div>
 
@@ -46,26 +53,26 @@
           </div>
           <div class="field">
             <label for="phone">Telefono <span class="en">/ Phone</span></label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel">
+            <input id="phone" name="Telefono" type="tel" autocomplete="tel">
           </div>
         </div>
 
         <fieldset class="field">
           <legend>Divisione <span class="en">/ Division</span> *</legend>
           <div class="choices">
-            <label><input type="radio" name="division" value="Textile" required> Textile</label>
-            <label><input type="radio" name="division" value="Graphic Arts"> Graphic Arts</label>
-            <label><input type="radio" name="division" value="Industrial Adhesives"> Industrial Adhesives</label>
+            <label><input type="radio" name="Divisione" value="Textile" required> Textile</label>
+            <label><input type="radio" name="Divisione" value="Graphic Arts"> Graphic Arts</label>
+            <label><input type="radio" name="Divisione" value="Industrial Adhesives"> Industrial Adhesives</label>
           </div>
         </fieldset>
 
         <fieldset class="field">
           <legend>Rif. stabilimento <span class="en">/ Plant ref.</span> *</legend>
           <div class="choices">
-            <label><input type="radio" name="plant" value="Diatecx (sede / headquarter)" required> Diatecx <small>(sede / headquarter)</small></label>
-            <label><input type="radio" name="plant" value="GAM"> GAM</label>
-            <label><input type="radio" name="plant" value="Carpi"> Carpi</label>
-            <label><input type="radio" name="plant" value="Empoli"> Empoli</label>
+            <label><input type="radio" name="Stabilimento" value="Diatecx (sede / headquarter)" required> Diatecx <small>(sede / headquarter)</small></label>
+            <label><input type="radio" name="Stabilimento" value="GAM"> GAM</label>
+            <label><input type="radio" name="Stabilimento" value="Carpi"> Carpi</label>
+            <label><input type="radio" name="Stabilimento" value="Empoli"> Empoli</label>
           </div>
         </fieldset>
       </section>
@@ -76,73 +83,72 @@
         <div class="row">
           <div class="field grow">
             <label for="product">Articolo <span class="en">/ Product</span> *</label>
-            <input id="product" name="product" type="text" required>
+            <input id="product" name="Articolo" type="text" required>
           </div>
           <div class="field">
             <label for="quantity">Quantità <span class="en">/ Quantity</span> *</label>
-            <input id="quantity" name="quantity" type="text" inputmode="decimal" required>
+            <input id="quantity" name="Quantità" type="text" inputmode="decimal" required>
           </div>
         </div>
 
         <div class="field">
           <label for="batch">Batch nr. *</label>
-          <input id="batch" name="batch" type="text" required>
+          <input id="batch" name="Batch nr" type="text" required>
         </div>
 
         <div class="row">
           <div class="field grow">
             <label for="ddt">DDT nr. <span class="en">/ Packing list nr.</span> *</label>
-            <input id="ddt" name="ddt" type="text" required>
+            <input id="ddt" name="DDT nr" type="text" required>
           </div>
           <div class="field">
             <label for="ddtDate">Data DDT <span class="en">/ Date</span></label>
-            <input id="ddtDate" name="ddtDate" type="date">
+            <input id="ddtDate" name="Data DDT" type="date">
           </div>
         </div>
 
         <div class="row">
           <div class="field grow">
             <label for="invoice">Rif. fattura <span class="en">/ Invoice ref.</span></label>
-            <input id="invoice" name="invoice" type="text">
+            <input id="invoice" name="Fattura nr" type="text">
           </div>
           <div class="field">
             <label for="invoiceDate">Data fattura <span class="en">/ Date</span></label>
-            <input id="invoiceDate" name="invoiceDate" type="date">
+            <input id="invoiceDate" name="Data fattura" type="date">
           </div>
         </div>
 
         <div class="field">
           <label for="description">Descrizione problematica <span class="en">/ Problem description</span> *</label>
-          <textarea id="description" name="description" rows="6" required></textarea>
+          <textarea id="description" name="Descrizione problematica" rows="6" required></textarea>
         </div>
 
         <fieldset class="field">
           <legend>Foto <span class="en">/ Photo</span> *</legend>
           <div class="choices">
-            <label><input type="radio" name="photo" value="Sì" required> Sì / Yes</label>
-            <label><input type="radio" name="photo" value="No"> No</label>
+            <label><input type="radio" name="Foto" value="Sì" required> Sì / Yes</label>
+            <label><input type="radio" name="Foto" value="No"> No</label>
           </div>
           <div id="photo-upload" class="upload" hidden>
-            <label for="photos">Seleziona le foto <span class="en">/ Select photos</span></label>
-            <input id="photos" name="photos" type="file" accept="image/*" multiple>
+            <label for="photo">Allega una foto <span class="en">/ Attach a photo</span> (max 5 MB)</label>
+            <input id="photo" name="attachment" type="file" accept="image/*">
             <div id="photo-preview" class="preview"></div>
-            <p class="hint">Le foto vanno allegate manualmente all'email che si aprirà dopo l'invio.
-              <span class="en">Photos must be attached manually to the email that opens after submitting.</span></p>
           </div>
         </fieldset>
 
         <fieldset class="field">
           <legend>Campioni <span class="en">/ Samples</span> (**) *</legend>
           <div class="choices">
-            <label><input type="radio" name="samples" value="Sì" required> Sì / Yes</label>
-            <label><input type="radio" name="samples" value="No"> No</label>
+            <label><input type="radio" name="Campioni" value="Sì" required> Sì / Yes</label>
+            <label><input type="radio" name="Campioni" value="No"> No</label>
           </div>
           <p class="hint">(**) Obbligatorio per sostituzione materiale.
             <span class="en">Mandatory for product replacement.</span></p>
         </fieldset>
 
         <div class="field">
-          <label class="check"><input type="checkbox" name="replacement" id="replacement"> <span>Il cliente chiede la sostituzione del materiale <span class="en">/ Customer requests product replacement</span></span></label>
+          <input type="hidden" id="replacement-value" name="Richiesta sostituzione" value="No">
+          <label class="check"><input type="checkbox" id="replacement"> <span>Il cliente chiede la sostituzione del materiale <span class="en">/ Customer requests product replacement</span></span></label>
         </div>
       </section>
 
@@ -161,18 +167,6 @@
         <button type="reset">Svuota <span class="en">/ Clear</span></button>
       </div>
     </form>
-
-    <div id="done" class="done" hidden>
-      <h2>Grazie <span class="en">/ Thank you</span></h2>
-      <p>Si è aperto il tuo programma di posta con il reclamo già compilato: controlla, allega le foto se previste e premi <strong>Invia</strong>.</p>
-      <p class="en">Your email client opened with the claim pre-filled: review it, attach the photos if any, and press <strong>Send</strong>.</p>
-      <p>Se l'email non si è aperta, <a id="mail-link" href="#">clicca qui</a> oppure copia il testo qui sotto.</p>
-      <pre id="summary"></pre>
-      <div class="actions">
-        <button type="button" id="copy-btn">Copia testo <span class="en">/ Copy text</span></button>
-        <button type="button" id="back-btn">Torna al modulo <span class="en">/ Back to form</span></button>
-      </div>
-    </div>
   </main>
 
   <script src="script.js"></script>
